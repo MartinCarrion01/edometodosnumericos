@@ -77,34 +77,42 @@ const RowEx = function (t, y1, y2, y1Ex, y2Ex, errY1, errY2) {
 const deltaT = 0.01;
 
 //Omega
-const omega = 0.5;
+const omega = 1;
 
 //Coeficientes a, b , c , d
-const a = 0;
-const b = 1;
-const c = -4;
-const d = 0;
-
-//Matriz de coeficientes
-const coef = [
-  [a, b],
-  [c, d],
-];
+const a = (t) => {
+  return -10;
+};
+const b = (t) => {
+  return 4;
+};
+const c = (t) => {
+  return -4;
+};
+const d = (t) => {
+  return 0;
+};
 
 //Valores iniciales
 let t = 0;
 
 //Vector de estado inicial
-let yVec = [0, 0];
+let yVec = [5, 3];
+
+//Matriz de coeficientes
+let coef = [
+  [a(t), b(t)],
+  [c(t), d(t)],
+];
 
 //Funcion g(t)
-const g = (t) => math.sin(3 * t);
+const g = (t) => 1;
 
 //Funcion k(t)
-const k = (t) => 0;
+const k = (t) => 0 * math.sin(3 * t);
 
 //Funcion l(t)
-const l = (t) => 10;
+const l = (t) => math.sin(3 * t) * 10;
 
 //Vector independiente
 const vecInd = (t) => [g(t) * k(t), g(t) * l(t)];
@@ -134,9 +142,9 @@ const y1Ex = (t) => {
 const y2Ex = (t) => {
   return (1 / 3) * 2 * Math.exp(-2 * t) + (14 / 3) * (1 / 2) * Math.exp(-8 * t);
 };
-const provided = true;
+const provided = false;
 
-for (let i = 0; i < 5000; i++) {
+for (let i = 0; i < 10000; i++) {
   if (provided) {
     rows.push(
       new RowEx(

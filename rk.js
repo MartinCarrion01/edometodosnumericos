@@ -49,27 +49,33 @@ const RowEx = function (t, y, yEx, err) {
 
 const rows = [];
 
-//Consideramos la edo diferencial y'(t) + k * y(t) = g(t)
+//Consideramos la edo diferencial y'(t) + k(t) * y(t)^n = g(t)
+//Si y(t) aparece elevado a un numero n, ir a la línea 98 y cambiar
+//el parametro de Math.pow(y,n) donde n es el exponente al cual esta
+//elevado y . Acá en runge-kutta hay que hacer lo mismo para el yg, entonces
+//ir a la linea 101 y hacer lo mismo que se indica anteriormente
 
 //DeltaT
-const deltaT = 0.2;
+const deltaT = 0.08;
 
 //Constante omega usada para runge kutta (euler modificado: w = 1, euler mejorado: w = 1/2)
 const omega = 0.5;
 
 //funcion g(t)
 const g = (t) => {
-  return Math.pow(Math.E, -2 * t);
+  return 0;
 };
 
-//coeficiente k multiplicando a y(t)
-const k = 2;
+//coeficiente k multiplicando a y(t), puede ser una funcion
+const k = (t) => {
+  return -2 * t;
+};
 
 //valor t inicial
 let t = 0;
 
 //valor y inicial
-let y = 1 / 10;
+let y = 1;
 
 //valores t y g auxiliares de runge kutta
 let tg, yg;
@@ -89,10 +95,10 @@ for (let i = 0; i < 50; i++) {
   } else {
     rows.push(new Row(t, y));
   }
-  k1 = deltaT * (g(t) - k * y);
+  k1 = deltaT * (g(t) - k(t) * Math.pow(y, 2));
   tg = t + deltaT / (2 * omega);
   yg = y + k1 / (2 * omega);
-  k2 = deltaT * (g(tg) - k * yg);
+  k2 = deltaT * (g(tg) - k(tg) * Math.pow(yg, 2));
   t = t + deltaT;
   y = y + (1 - omega) * k1 + omega * k2;
 }

@@ -49,18 +49,23 @@ const RowEx = function (t, y, yEx, err) {
 
 const rows = [];
 
-//Consideramos la edo diferencial y'(t) + k * y(t) = g(t)
+//Consideramos la edo diferencial y'(t) + k(t) * y(t)^n = g(t)
+//Si y(t) aparece elevado a un numero n, ir a la línea 91 y cambiar 
+//el parametro de Math.pow(y,n) donde n es el exponente al cual esta 
+//elevado y
 
 //DeltaT
-const deltaT = 0.1;
+const deltaT = 0.25;
 
 //funcion g(t)
 const g = (t) => {
   return -2 * t - 1;
 };
 
-//coeficiente k multiplicando a y(t)
-const k = -2;
+//coeficiente k multiplicando a y(t), puede ser una función
+const k = (t) => {
+  return 2;
+};
 
 //valor t inicial
 let t = 0;
@@ -83,7 +88,7 @@ for (let i = 0; i < 50; i++) {
   } else {
     rows.push(new Row(t, y));
   }
-  k1 = deltaT * (g(t) - k * y);
+  k1 = deltaT * (g(t) - k(t) * Math.pow(y, 1));
   t = t + deltaT;
   y = y + k1;
 }

@@ -74,25 +74,39 @@ const RowEx = function (t, y1, y2, y1Ex, y2Ex, errY1, errY2) {
 // y2'(t) = c*y1(t) + d*y2(t) + g(t)*l(t)
 
 //Delta t
-const deltaT = 0.02;
+const deltaT = 0.055;
 
 //Coeficientes a, b , c , d
-const a = -10;
-const b = 4;
-const c = -4;
-const d = 0;
+const a = (t) => {
+  return -0.5;
+};
+const b = (t) => {
+  return 2;
+};
+const c = (t) => {
+  return -2;
+};
+const d = (t) => {
+  return -0.5;
+};
+
+//Valores iniciales
+let t = 0;
+
+//Vector de estado inicial
+let yVec = [5, 3];
 
 //Matriz de coeficientes
-const coef = [
-  [a, b],
-  [c, d],
+let coef = [
+  [a(t), b(t)],
+  [c(t), d(t)],
 ];
 
 //Valor t inicial
 let t = 0;
 
 //Vector de estado inicial
-let yVec = [5, 3];
+let yVec = [10, 0];
 
 //Funcion g(t)
 const g = (t) => 1;
@@ -119,9 +133,9 @@ const y1Ex = (t) => {
 const y2Ex = (t) => {
   return (1 / 3) * 2 * Math.exp(-2 * t) + (14 / 3) * (1 / 2) * Math.exp(-8 * t);
 };
-const provided = true;
+const provided = false;
 
-for (let i = 0; i < 50; i++) {
+for (let i = 0; i < 5000; i++) {
   if (provided) {
     rows.push(
       new RowEx(
