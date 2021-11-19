@@ -171,7 +171,7 @@ for (let i = 0; i < 10000; i++) {
   }
   kAux2 = multiplicar(coef, ygVec);
   for (let n = 0; n < 2; n++) {
-    kAux2[n] = kAux2[n] + vecInd(t)[n];
+    kAux2[n] = kAux2[n] + vecInd(tg)[n];
   }
   kVector2 = kAux2.map((element) => element * deltaT);
   t = t + deltaT;
